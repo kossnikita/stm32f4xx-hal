@@ -546,7 +546,7 @@ impl<SPI: Instance, const BIDI: bool, W> Spi<SPI, BIDI, W> {
     /// Convert the spi to another mode.
     fn into_mode<const BIDI2: bool, W2: FrameSize>(self) -> Spi<SPI, BIDI2, W2> {
         let mut spi = Spi::_new(self.inner.spi, self.pins);
-        spi.enable(false);
+        spi.disable();
         spi.init()
     }
 }
@@ -563,7 +563,7 @@ impl<SPI: Instance, const BIDI: bool, W> SpiSlave<SPI, BIDI, W> {
     /// Convert the spi to another mode.
     fn into_mode<const BIDI2: bool, W2: FrameSize>(self) -> SpiSlave<SPI, BIDI2, W2> {
         let mut spi = SpiSlave::_new(self.inner.spi, self.pins);
-        spi.enable(false);
+        spi.disable();
         spi.init()
     }
 }
@@ -642,11 +642,21 @@ impl<SPI: Instance> Inner<SPI> {
         Self { spi }
     }
 
-    /// Enable/disable spi
-    pub fn enable(&mut self, enable: bool) {
+    /// Enable SPI
+    pub fn enable(&mut self) {
         self.spi.cr1.modify(|_, w| {
             // spe: enable the SPI bus
-            w.spe().bit(enable)
+            w.spe().set_bit()
+        });
+    }
+
+    /// Disable SPI
+    pub fn disable(&mut self) {
+        // Wait for !BSY
+        while self.is_busy() {}
+        self.spi.cr1.modify(|_, w| {
+            // spe: enable the SPI bus
+            w.spe().clear_bit()
         });
     }
 
@@ -805,7 +815,10 @@ impl<SPI: Instance> Inner<SPI> {
     // RM SPI::3.5. This is more than twice as fast as the
     // default Write<> implementation (which reads and drops each
     // received value)
-    fn spi_write<const BIDI: bool, W: FrameSize>(&mut self, words: impl IntoIterator<Item = W>) -> Result<(), Error> {
+    fn spi_write<const BIDI: bool, W: FrameSize>(
+        &mut self,
+        words: impl IntoIterator<Item = W>,
+    ) -> Result<(), Error> {
         if BIDI {
             self.bidi_output();
         }
@@ -824,8 +837,6 @@ impl<SPI: Instance> Inner<SPI> {
         }
         // Wait for final TXE
         while !self.is_tx_empty() {}
-        // Wait for final !BSY
-        while self.is_busy() {}
         if !BIDI {
             // Clear OVR set due to dropped received values
             let _: W = self.read_data_reg();

@@ -1,8 +1,5 @@
 use super::*;
-use crate::gpio::{self, Edge, ExtiPin};
-use crate::gpio::{marker, Alternate, NoPin, OpenDrain, PinMode, PushPull};
-use crate::pac::EXTI;
-use crate::syscfg::SysCfg;
+use crate::gpio::{self, NoPin, OpenDrain, PushPull};
 
 #[cfg(any(feature = "gpio-g05x", feature = "gpio-g07x", feature = "gpio-g0bx"))]
 pub mod comp1 {

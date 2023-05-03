@@ -85,7 +85,7 @@ where
             Edge::Rising => {
                 #[cfg(any(feature = "f4", feature = "f7"))]
                 let (rtsr, ftsr) = (&exti.rtsr, &exti.ftsr);
-                #[cfg(feature = "l4")]
+                #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
                 let (rtsr, ftsr) = (&exti.rtsr1, &exti.ftsr1);
                 rtsr.modify(|r, w| unsafe { w.bits(r.bits() | (1 << i)) });
                 ftsr.modify(|r, w| unsafe { w.bits(r.bits() & !(1 << i)) });
@@ -93,7 +93,7 @@ where
             Edge::Falling => {
                 #[cfg(any(feature = "f4", feature = "f7"))]
                 let (rtsr, ftsr) = (&exti.rtsr, &exti.ftsr);
-                #[cfg(feature = "l4")]
+                #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
                 let (rtsr, ftsr) = (&exti.rtsr1, &exti.ftsr1);
                 ftsr.modify(|r, w| unsafe { w.bits(r.bits() | (1 << i)) });
                 rtsr.modify(|r, w| unsafe { w.bits(r.bits() & !(1 << i)) });
@@ -101,7 +101,7 @@ where
             Edge::RisingFalling => {
                 #[cfg(any(feature = "f4", feature = "f7"))]
                 let (rtsr, ftsr) = (&exti.rtsr, &exti.ftsr);
-                #[cfg(feature = "l4")]
+                #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
                 let (rtsr, ftsr) = (&exti.rtsr1, &exti.ftsr1);
                 rtsr.modify(|r, w| unsafe { w.bits(r.bits() | (1 << i)) });
                 ftsr.modify(|r, w| unsafe { w.bits(r.bits() | (1 << i)) });
@@ -113,7 +113,7 @@ where
     fn enable_interrupt(&mut self, exti: &mut EXTI) {
         #[cfg(any(feature = "f4", feature = "f7"))]
         let imr = &exti.imr;
-        #[cfg(feature = "l4")]
+        #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
         let imr = &exti.imr1;
         imr.modify(|r, w| unsafe { w.bits(r.bits() | (1 << self.pin_id())) });
     }
@@ -122,7 +122,7 @@ where
     fn disable_interrupt(&mut self, exti: &mut EXTI) {
         #[cfg(any(feature = "f4", feature = "f7"))]
         let imr = &exti.imr;
-        #[cfg(feature = "l4")]
+        #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
         let imr = &exti.imr1;
         imr.modify(|r, w| unsafe { w.bits(r.bits() & !(1 << self.pin_id())) });
     }
@@ -131,7 +131,7 @@ where
     fn clear_interrupt_pending_bit(&mut self) {
         #[cfg(any(feature = "f4", feature = "f7"))]
         let pr = unsafe { &(*EXTI::ptr()).pr };
-        #[cfg(feature = "l4")]
+        #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
         let pr = unsafe { &(*EXTI::ptr()).pr1 };
         pr.write(|w| unsafe { w.bits(1 << self.pin_id()) });
     }
@@ -140,7 +140,7 @@ where
     fn check_interrupt(&self) -> bool {
         #[cfg(any(feature = "f4", feature = "f7"))]
         let pr = unsafe { &(*EXTI::ptr()).pr };
-        #[cfg(feature = "l4")]
+        #[cfg(any(feature = "f3", feature = "g4", feature = "l4"))]
         let pr = unsafe { &(*EXTI::ptr()).pr1 };
         (pr.read().bits() & (1 << self.pin_id())) != 0
     }

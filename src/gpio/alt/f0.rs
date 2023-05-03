@@ -1,3 +1,6 @@
+use super::*;
+use crate::gpio::{self, NoPin, OpenDrain, PushPull};
+
 #[cfg(any(feature = "gpio-f042", feature = "gpio-f052", feature = "gpio-f091"))]
 pub mod can {
     use super::*;

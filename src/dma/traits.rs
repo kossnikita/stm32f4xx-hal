@@ -293,22 +293,22 @@ pub use f3::*;
 mod f4;
 #[cfg(feature = "f4")]
 pub use f4::*;
-/*
+
 #[cfg(feature = "f7")]
 mod f7;
 #[cfg(feature = "f7")]
 pub use f7::*;
-
+/*
 #[cfg(feature = "g0")]
 mod g0;
 #[cfg(feature = "g0")]
 pub use g0::*;
-
+*/
 #[cfg(feature = "g4")]
 mod g4;
 #[cfg(feature = "g4")]
 pub use g4::*;
-
+/*
 #[cfg(feature = "h7")]
 mod h7;
 #[cfg(feature = "h7")]

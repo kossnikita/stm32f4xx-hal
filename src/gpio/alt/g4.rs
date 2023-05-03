@@ -1,8 +1,5 @@
 use super::*;
-use crate::gpio::{self, Edge, ExtiPin};
-use crate::gpio::{marker, Alternate, NoPin, OpenDrain, PinMode, PushPull};
-use crate::pac::EXTI;
-use crate::syscfg::SysCfg;
+use crate::gpio::{self, NoPin, OpenDrain, PushPull};
 
 pub mod comp1 {
     use super::*;
@@ -870,7 +867,9 @@ pub mod lptim1 {
 
             PC2<1>,
         ],
+    }
 
+    pin! {
         <Out> default:PushPull for [
             PA14<1>,
 
@@ -1181,7 +1180,7 @@ pub mod sai1 {
             PF6<3>,
         ],
     }
-    use crate::pac::SAI1 as SAI;
+    use crate::pac::SAI;
     pub struct ChannelA;
     pub struct ChannelB;
     impl SaiChannels for SAI {

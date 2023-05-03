@@ -5,10 +5,7 @@
 use crate::hal::blocking::i2c::{Read, Write, WriteRead};
 use crate::rcc::{Clocks, Enable, Reset};
 use crate::time::Hertz;
-use crate::{
-    gpio,
-    pac::{self, i2c1},
-};
+use crate::{gpio, pac};
 use core::ops::Deref;
 
 /// I2C error

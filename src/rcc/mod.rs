@@ -44,22 +44,22 @@
 mod c0;
 #[cfg(feature = "c0")]
 pub use c0::*;
-
+*/
 #[cfg(feature = "f0")]
 mod f0;
 #[cfg(feature = "f0")]
 pub use f0::*;
-
+/*
 #[cfg(feature = "f2")]
 mod f2;
 #[cfg(feature = "f2")]
 pub use f2::*;
-
+*/
 #[cfg(feature = "f3")]
 mod f3;
 #[cfg(feature = "f3")]
 pub use f3::*;
-*/
+
 #[cfg(feature = "f4")]
 mod f4;
 #[cfg(feature = "f4")]
@@ -74,12 +74,12 @@ pub use f7::*;
 mod g0;
 #[cfg(feature = "g0")]
 pub use g0::*;
-
+*/
 #[cfg(feature = "g4")]
 mod g4;
 #[cfg(feature = "g4")]
 pub use g4::*;
-
+/*
 #[cfg(feature = "h7")]
 mod h7;
 #[cfg(feature = "h7")]

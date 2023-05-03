@@ -3,15 +3,18 @@
 use core::{
     convert::Infallible,
     marker::PhantomData,
-    ops::DerefMut,
-    sync::atomic::{self, Ordering},
+    //ops::DerefMut,
+    //sync::atomic::{self, Ordering},
 };
-
+#[cfg(feature = "dma")]
 use stable_deref_trait::StableDeref;
 
+#[cfg(feature = "dma")]
 use crate::{
     dma::{dma1, Event as DMAEvent, RxDma, Transfer, TransferPayload, W},
     dmamux::{DmaInput, DmaMux},
+};
+use crate::{
     gpio::{self, Analog},
     hal::{
         adc::{Channel as EmbeddedHalChannel, OneShot},
@@ -279,6 +282,7 @@ where
     }
 }
 
+#[cfg(feature = "dma")]
 impl TransferPayload for RxDma<Adc<ADC1>, dma1::C1> {
     fn start(&mut self) {
         self.channel.start();
@@ -289,6 +293,7 @@ impl TransferPayload for RxDma<Adc<ADC1>, dma1::C1> {
     }
 }
 
+#[cfg(feature = "dma")]
 impl RxDma<Adc<ADC1>, dma1::C1> {
     pub fn split(mut self) -> (Adc<ADC1>, dma1::C1) {
         self.stop();
@@ -296,6 +301,7 @@ impl RxDma<Adc<ADC1>, dma1::C1> {
     }
 }
 
+#[cfg(feature = "dma")]
 impl<BUFFER, const N: usize> Transfer<W, BUFFER, RxDma<Adc<ADC1>, dma1::C1>>
 where
     BUFFER: Sized + StableDeref<Target = [u16; N]> + DerefMut + 'static,
@@ -675,15 +681,7 @@ macro_rules! adc {
                     delay: &mut impl DelayUs<u32>,
                 ) -> Self {
                     // Select system clock as ADC clock source
-                    ccipr.ccipr().modify(|_, w| {
-                        // This is sound, as `0b11` is a valid value for this field.
-                        unsafe {
-                            // TODO: Switch to enum once https://github.com/stm32-rs/stm32-rs/pull/720 is released.
-                            w.adcsel().bits(0b11);
-                        }
-
-                        w
-                    });
+                    ccipr.ccipr().modify(|_, w| w.adcsel().sysclk());
 
                     // Initialize the ADC, according to the STM32L4xx Reference Manual,
                     // section 16.4.6.

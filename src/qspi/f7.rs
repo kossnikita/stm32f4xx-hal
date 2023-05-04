@@ -264,22 +264,14 @@ impl Qspi {
 
             // Update CCR register with metadata
             self.qspi.ccr.write_with_zero(|w| {
-                w.fmode()
-                    .bits(fmode)
-                    .imode()
-                    .bits(transaction.iwidth)
-                    .admode()
-                    .bits(transaction.awidth)
-                    .dmode()
-                    .bits(transaction.dwidth)
-                    .adsize()
-                    .bits(self.adsize)
-                    .abmode()
-                    .bits(QspiWidth::NONE)
-                    .dcyc()
-                    .bits(transaction.dummy)
-                    .instruction()
-                    .bits(transaction.instruction)
+                w.fmode().bits(fmode);
+                w.imode().bits(transaction.iwidth);
+                w.admode().bits(transaction.awidth);
+                w.dmode().bits(transaction.dwidth);
+                w.adsize().bits(self.adsize);
+                w.abmode().bits(QspiWidth::NONE);
+                w.dcyc().bits(transaction.dummy);
+                w.instruction().bits(transaction.instruction)
             });
 
             // Update address register, if applicable

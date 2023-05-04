@@ -257,12 +257,11 @@ pub trait Channel {}
 pub unsafe trait DMASet<STREAM, const CHANNEL: u8, DIRECTION> {}
 
 macro_rules! dma_map {
-    ($(($Stream:ty:$C:literal, $Peripheral:ty, $Dir:ty $(|$Dir2:ty)?)),+ $(,)*) => {
+    ($(($Stream:ty:$C:literal, $Peripheral:ty, [$($Dir:ty)|+])),+ $(,)*) => {
         $(
-            unsafe impl DMASet<$Stream, $C, $Dir> for $Peripheral {}
             $(
-               unsafe impl DMASet<$Stream, $C, $Dir2> for $Peripheral {}
-            )?
+               unsafe impl DMASet<$Stream, $C, $Dir> for $Peripheral {}
+            )+
         )+
     };
 }
@@ -354,3 +353,30 @@ mod wb;
 #[cfg(feature = "wb")]
 pub use wb::*;
 */
+
+#[cfg(feature = "dfsdm")]
+pub struct FLT<T, const F: u8> {
+    _per: PhantomData<T>,
+}
+
+#[cfg(feature = "dfsdm")]
+impl<T, const F: u8> crate::Sealed for FLT<T, F> {}
+
+#[cfg(feature = "sai")]
+pub struct SAICH<T, const C: u8> {
+    _per: PhantomData<T>,
+}
+
+#[cfg(feature = "sai")]
+impl<T, const C: u8> crate::Sealed for SAICH<T, C> {}
+
+dma_map!(
+    (Stream0<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream1<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream2<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream3<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream4<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream5<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream6<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+    (Stream7<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
+);

@@ -5,6 +5,7 @@
 #![allow(non_upper_case_globals)]
 
 use core::convert::TryFrom;
+use core::marker::PhantomData;
 use cortex_m::peripheral::syst::SystClkSource;
 use cortex_m::peripheral::SYST;
 
@@ -246,14 +247,18 @@ pub enum Ocm {
 }
 
 /// Wrapper type that indicates which register of the contained timer to use for DMA.
-pub struct CCR<T, const C: u8>(T);
+pub struct CCR<T, const C: u8> {
+    _per: PhantomData<T>,
+}
 pub type CCR1<T> = CCR<T, 0>;
 pub type CCR2<T> = CCR<T, 1>;
 pub type CCR3<T> = CCR<T, 2>;
 pub type CCR4<T> = CCR<T, 3>;
 
 /// Wrapper type that indicates which register of the contained timer to use for DMA.
-pub struct DMAR<T>(T);
+pub struct DMAR<T> {
+    _per: PhantomData<T>,
+}
 
 mod sealed {
     use super::{Channel, Event, IdleState, Ocm, Polarity};
@@ -558,7 +563,7 @@ macro_rules! hal {
             unsafe impl<const C: u8> PeriAddress for CCR<$TIM, C> {
                 #[inline(always)]
                 fn address(&self) -> u32 {
-                    &self.0.ccr[C as usize] as *const _ as u32
+                    unsafe { &(*<$TIM>::ptr()).ccr[C as usize] as *const _ as u32 }
                 }
 
                 type MemSize = $bits;
@@ -581,7 +586,7 @@ macro_rules! with_dmar {
         unsafe impl PeriAddress for DMAR<$TIM> {
             #[inline(always)]
             fn address(&self) -> u32 {
-                &self.0.dmar as *const _ as u32
+                unsafe { &(*<$TIM>::ptr()).dmar as *const _ as u32 }
             }
 
             type MemSize = $memsize;

@@ -385,7 +385,7 @@ address!((pac::SPI5, dr, u8),);
 dma_map!(
     (Stream4<DMA2>:4, pac::SPI4, [PeripheralToMemory]), //SPI4_RX
 );
-
+/*
 #[cfg(feature = "dfsdm1")]
 mod dfsdm1 {
     use super::*;
@@ -402,7 +402,7 @@ mod dfsdm1 {
         (Stream6<DMA2>:3, FLT<DFSDM1, 0>, [PeripheralToMemory]), //DFSDM1_FLT0:DMA_CHANNEL_3
     );
 
-    unsafe impl<const F: u8> PeriAddress for CCR<DFSDM1, F> {
+    unsafe impl<const F: u8> PeriAddress for FLT<DFSDM1, F> {
         #[inline(always)]
         fn address(&self) -> u32 {
             unsafe { &(*DFSDM1::ptr()).flt[F as usize].rdatar as *const _ as u32 }
@@ -424,7 +424,7 @@ dma_map!(
     (Stream7<DMA2>:8, FLT<pac::DFSDM2, 3>, [PeripheralToMemory]), //DFSDM2_FLT3
 );
 #[cfg(feature = "dfsdm2")]
-unsafe impl<const F: u8> PeriAddress for CCR<pac::DFSDM2, F> {
+unsafe impl<const F: u8> PeriAddress for FLT<pac::DFSDM2, F> {
     #[inline(always)]
     fn address(&self) -> u32 {
         unsafe { &(*DFSDM2::ptr()).flt[F as usize].rdatar as *const _ as u32 }
@@ -432,7 +432,7 @@ unsafe impl<const F: u8> PeriAddress for CCR<pac::DFSDM2, F> {
 
     type MemSize = u32;
 }
-
+ */
 #[cfg(any(
     feature = "gpio-f412",
     feature = "gpio-f413",
@@ -486,9 +486,9 @@ address!(
 #[cfg(feature = "sai1")]
 mod sai1 {
     use super::*;
-    #[cfg(not(feature = "gpio-f446"))]
+    #[cfg(not(any(feature = "gpio-f446", feature="gpio-f417", feature="svd-f427")))]
     use pac::SAI as SAI1;
-    #[cfg(feature = "gpio-f446")]
+    #[cfg(any(feature = "gpio-f446", feature="gpio-f417", feature="svd-f427"))]
     use pac::SAI1;
 
     dma_map!(

@@ -344,7 +344,7 @@ gpio-f412 = [
 gpio-f413 = [
     "otg-fs",
     "rng",
-    "can1", "can2", "can3", "dfsdm1", "dfsdm2", "fmpi2c1", "fsmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "i2c2", "i2c3", "i2s", "i2s1", "i2s2", "i2s3", "i2s4", "i2s5", "lptim1", "quadspi", "rtc", "sai1", "sdio", "spi1", "spi2", "spi3", "spi4", "spi5", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim6", "tim7", "tim8", "tim9", "uart10", "uart4", "uart5", "uart7", "uart8", "uart9", "usart1", "usart2", "usart3", "usart6",
+    "aes", "can1", "can2", "can3", "dfsdm1", "dfsdm2", "fmpi2c1", "fsmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "i2c2", "i2c3", "i2s", "i2s1", "i2s2", "i2s3", "i2s4", "i2s5", "lptim1", "quadspi", "rtc", "sai1", "sdio", "spi1", "spi2", "spi3", "spi4", "spi5", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim6", "tim7", "tim8", "tim9", "uart10", "uart4", "uart5", "uart7", "uart8", "uart9", "usart1", "usart2", "usart3", "usart6",
 ]
 gpio-f417 = [
     "otg-fs",
@@ -399,13 +399,13 @@ svd-f7x7 = ["f7", "stm32f7?/stm32f7x7", "gpio-f76x", "ltdc", "fmc"]
 svd-f7x9 = ["f7", "stm32f7?/stm32f7x9", "gpio-f76x", "ltdc", "fmc"]
 
 gpio-f72x = [
-    "can1", "fmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "gpioh", "gpioi", "i2c2", "i2c3", "i2s", "i2s1", "i2s2", "i2s3", "lptim1", "quadspi", "rtc", "sai1", "sai2", "sdmmc1", "sdmmc2", "spi1", "spi2", "spi3", "spi4", "spi5", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim8", "tim9", "uart4", "uart5", "uart7", "uart8", "usart1", "usart2", "usart3", "usart6", "otg-fs", "otg-hs",
+    "aes", "can1", "fmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "gpioh", "gpioi", "i2c2", "i2c3", "i2s", "i2s1", "i2s2", "i2s3", "lptim1", "quadspi", "rtc", "sai1", "sai2", "sdmmc1", "sdmmc2", "spi1", "spi2", "spi3", "spi4", "spi5", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim8", "tim9", "uart4", "uart5", "uart7", "uart8", "usart1", "usart2", "usart3", "usart6", "otg-fs", "otg-hs",
 ]
 gpio-f746 = [
-    "can1", "can2", "dcmi", "eth", "fmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "gpioh", "gpioi", "gpioj", "gpiok", "i2c2", "i2c3", "i2c4", "i2s", "i2s1", "i2s2", "i2s3", "lptim1", "ltdc", "quadspi", "rtc", "sai1", "sai2", "sdmmc1", "spdifrx", "spi1", "spi2", "spi3", "spi4", "spi5", "spi6", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim8", "tim9", "uart4", "uart5", "uart7", "uart8", "usart1", "usart2", "usart3", "usart6", "otg-fs", "otg-hs",
+    "can1", "can2", "cryp", "dcmi", "eth", "fmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "gpioh", "gpioi", "gpioj", "gpiok", "hash", "i2c2", "i2c3", "i2c4", "i2s", "i2s1", "i2s2", "i2s3", "lptim1", "ltdc", "quadspi", "rtc", "sai1", "sai2", "sdmmc1", "spdifrx", "spi1", "spi2", "spi3", "spi4", "spi5", "spi6", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim8", "tim9", "uart4", "uart5", "uart7", "uart8", "usart1", "usart2", "usart3", "usart6", "otg-fs", "otg-hs",
 ]
 gpio-f76x = [
-    "can1", "can2", "can3", "dcmi", "dfsdm1", "dsihost", "eth", "fmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "gpioh", "gpioi", "gpioj", "gpiok", "i2c2", "i2c3", "i2c4", "i2s", "i2s1", "i2s2", "i2s3", "lptim1", "ltdc", "mdios", "quadspi", "rtc", "sai1", "sai2", "sdmmc1", "sdmmc2", "spdifrx", "spi1", "spi2", "spi3", "spi4", "spi5", "spi6", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim8", "tim9", "uart4", "uart5", "uart7", "uart8", "usart1", "usart2", "usart3", "usart6", "otg-fs", "otg-hs",
+    "can1", "can2", "cryp", "can3", "dcmi", "dfsdm1", "dsihost", "eth", "fmc", "gpioc", "gpiod", "gpioe", "gpiof", "gpiog", "gpioh", "gpioi", "gpioj", "gpiok", "hash", "i2c2", "i2c3", "i2c4", "i2s", "i2s1", "i2s2", "i2s3", "lptim1", "ltdc", "mdios", "quadspi", "rtc", "sai1", "sai2", "sdmmc1", "sdmmc2", "spdifrx", "spi1", "spi2", "spi3", "spi4", "spi5", "spi6", "sys", "tim1", "tim10", "tim11", "tim12", "tim13", "tim14", "tim2", "tim3", "tim4", "tim5", "tim8", "tim9", "uart4", "uart5", "uart7", "uart8", "usart1", "usart2", "usart3", "usart6", "otg-fs", "otg-hs",
 ]
 
 # G0
@@ -622,9 +622,11 @@ sai = []
 adc2 = []
 adc3 = []
 adf1 = []
+aes = []
 can1 = []
 can2 = []
 can3 = []
+cryp = []
 cm4 = []
 crs1 = []
 comp1 = []
@@ -641,6 +643,7 @@ debug = []
 dfsdm1 = ["dfsdm"]
 dfsdm2 = ["dfsdm"]
 dsihost = []
+hash = []
 eth = []
 fdcan1 = []
 fdcan2 = []

@@ -301,8 +301,6 @@ dma_map!(
     (Stream1<DMA2>:2, pac::ADC3, [PeripheralToMemory]), //ADC3
     (Stream2<DMA2>:1, pac::ADC2, [PeripheralToMemory]), //ADC2
     (Stream3<DMA2>:1, pac::ADC2, [PeripheralToMemory]), //ADC2
-    (Stream1<DMA2>:1, pac::DCMI, [PeripheralToMemory]),  //DCMI
-    (Stream7<DMA2>:1, pac::DCMI, [PeripheralToMemory]),  //DCMI
 );
 #[cfg(any(
     feature = "gpio-f417",
@@ -313,6 +311,15 @@ dma_map!(
 address!(
     (pac::ADC2, dr, u16),
     (pac::ADC3, dr, u16),
+);
+
+#[cfg(feature = "dcmi")]
+dma_map!(
+    (Stream1<DMA2>:1, pac::DCMI, [PeripheralToMemory]),  //DCMI
+    (Stream7<DMA2>:1, pac::DCMI, [PeripheralToMemory]),  //DCMI
+);
+#[cfg(feature = "dcmi")]
+address!(
     (pac::DCMI, dr, u32),
 );
 
@@ -432,23 +439,14 @@ unsafe impl<const F: u8> PeriAddress for FLT<pac::DFSDM2, F> {
 
     type MemSize = u32;
 }
- */
-#[cfg(any(
-    feature = "gpio-f412",
-    feature = "gpio-f413",
-    feature = "gpio-f446",
-    feature = "gpio-f469",
-))]
+*/
+
+#[cfg(feature = "quadspi")]
 dma_map!(
     (Stream7<DMA2>:3, pac::QUADSPI, [MemoryToPeripheral | PeripheralToMemory]), //QUADSPI
 );
 
-#[cfg(any(
-    feature = "gpio-f412",
-    feature = "gpio-f413",
-    feature = "gpio-f446",
-    feature = "gpio-f469",
-))]
+#[cfg(feature = "quadspi")]
 address!((pac::QUADSPI, dr, u32),);
 
 #[cfg(any(feature = "gpio-f413", feature = "gpio-f427", feature = "gpio-f469",))]
@@ -471,16 +469,17 @@ dma_map!(
     (Stream5<DMA2>:9, pac::UART10, [MemoryToPeripheral]), //UART10_TX
     (Stream7<DMA2>:0, pac::UART9, [PeripheralToMemory]), //UART9_RX
     (Stream7<DMA2>:6, pac::UART10, [MemoryToPeripheral]), //UART10_TX:DMA_CHANNEL_6
-    //(Stream6<DMA2>:2, IN<pac::AES>, [MemoryToPeripheral]), //AES_IN
-    //(Stream5<DMA2>:2, OUT<pac::AES>, [PeripheralToMemory]), //AES_OUT
 );
-
 #[cfg(feature = "gpio-f413")]
 address!(
-    //(IN<pac::AES>, dinr),
-    //(OUT<pac::AES>, doutr),
     (pac::UART9, dr, u8),
     (pac::UART10, dr, u8),
+);
+
+#[cfg(feature = "aes")]
+dma_map!(
+    (Stream6<DMA2>:2, AES_IN, [MemoryToPeripheral]), //AES_IN
+    (Stream5<DMA2>:2, AES_OUT, [PeripheralToMemory]), //AES_OUT
 );
 
 #[cfg(feature = "sai1")]
@@ -508,36 +507,6 @@ mod sai1 {
         type MemSize = u32;
     }
 }
-
-#[cfg(any(feature = "gpio-f427", feature = "gpio-f469",))]
-dma_map!(
-    (Stream5<DMA2>:1, pac::SPI6, [MemoryToPeripheral]), //SPI6_TX
-    (Stream6<DMA2>:1, pac::SPI6, [PeripheralToMemory]), //SPI6_RX
-);
-
-#[cfg(any(feature = "gpio-f427", feature = "gpio-f469",))]
-address!((pac::SPI6, dr, u8),);
-
-/*
-#[cfg(any(
-    feature = "gpio-f446",
-))]
-dma_map!(
-    (Stream1<DMA1>:0, pac::SPDIFRX, [PeripheralToMemory]), //SPDIF_RX_DT
-    (Stream2<DMA1>:2, pac::FMPI2C1, [PeripheralToMemory]), //FMPI2C1_RX
-    (Stream5<DMA1>:2, pac::FMPI2C1, [MemoryToPeripheral]), //FMPI2C1_TX
-    (Stream6<DMA1>:0, pac::SPDIFRX, [PeripheralToMemory]), //SPDIF_RX_CS
-);
-
-#[cfg(any(
-    feature = "gpio-f446",
-))]
-address!(
-    (pac::SPDIFRX, ??),
-    (pac::FMPI2C1, ??),
-);
-*/
-
 #[cfg(feature = "sai2")]
 dma_map!(
     (Stream4<DMA2>:3, SAICH<pac::SAI2, 0>, [MemoryToPeripheral | PeripheralToMemory]), //SAI2_A
@@ -554,3 +523,37 @@ unsafe impl<const C: u8> PeriAddress for SAICH<pac::SAI2, C> {
 
     type MemSize = u32;
 }
+
+#[cfg(feature = "spi6")]
+dma_map!(
+    (Stream5<DMA2>:1, pac::SPI6, [MemoryToPeripheral]), //SPI6_TX
+    (Stream6<DMA2>:1, pac::SPI6, [PeripheralToMemory]), //SPI6_RX
+);
+
+#[cfg(feature = "spi6")]
+address!((pac::SPI6, dr, u8),);
+
+#[cfg(feature = "spdifrx")]
+dma_map!(
+    (Stream1<DMA1>:0, pac::SPDIFRX, [PeripheralToMemory]), //SPDIF_RX_DT
+    //(Stream6<DMA1>:0, SPDIFRX_CS, [PeripheralToMemory]), //SPDIF_RX_CS
+);
+
+/*
+#[cfg(any(
+    feature = "gpio-f446",
+))]
+dma_map!(
+    (Stream2<DMA1>:2, pac::FMPI2C1, [PeripheralToMemory]), //FMPI2C1_RX
+    (Stream5<DMA1>:2, pac::FMPI2C1, [MemoryToPeripheral]), //FMPI2C1_TX
+    (Stream6<DMA1>:0, pac::SPDIFRX, [PeripheralToMemory]), //SPDIF_RX_CS
+);
+
+#[cfg(any(
+    feature = "gpio-f446",
+))]
+address!(
+    (pac::FMPI2C1, ??),
+);
+*/
+

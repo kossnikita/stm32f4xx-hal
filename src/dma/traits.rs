@@ -380,3 +380,48 @@ dma_map!(
     (Stream6<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
     (Stream7<DMA2>:0, MemoryToMemory<u8>, [MemoryToMemory<u8> | MemoryToMemory<u16> | MemoryToMemory<u32>]),
 );
+
+#[cfg(feature = "spdifrx")]
+address!(
+    (pac::SPDIFRX, dr, u32),
+);
+
+#[cfg(feature = "aes")]
+pub struct AES_IN(());
+#[cfg(feature = "aes")]
+pub struct AES_OUT(());
+
+#[cfg(feature = "aes")]
+unsafe impl PeriAddress for AES_IN {
+    fn address(&self) -> u32 {
+        unsafe { &(*pac::AES::ptr()).dinr as *const _ as u32 }
+    }
+    type MemSize = u32;
+}
+#[cfg(feature = "aes")]
+unsafe impl PeriAddress for AES_OUT {
+    fn address(&self) -> u32 {
+        unsafe { &(*pac::AES::ptr()).doutr as *const _ as u32 }
+    }
+    type MemSize = u32;
+}
+
+#[cfg(feature = "cryp")]
+pub struct CRYP_IN(());
+#[cfg(feature = "cryp")]
+pub struct CRYP_OUT(());
+
+#[cfg(feature = "cryp")]
+unsafe impl PeriAddress for CRYP_IN {
+    fn address(&self) -> u32 {
+        unsafe { &(*pac::CRYP::ptr()).din as *const _ as u32 }
+    }
+    type MemSize = u32;
+}
+#[cfg(feature = "cryp")]
+unsafe impl PeriAddress for CRYP_OUT {
+    fn address(&self) -> u32 {
+        unsafe { &(*pac::CRYP::ptr()).dout as *const _ as u32 }
+    }
+    type MemSize = u32;
+}

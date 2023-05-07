@@ -600,8 +600,20 @@ macro_rules! gpio {
 }
 use gpio;
 
+#[cfg(feature = "f2")]
+mod f2;
+#[cfg(feature = "f2")]
+pub use f2::*;
+
+#[cfg(feature = "f4")]
 mod f4;
+#[cfg(feature = "f4")]
 pub use f4::*;
+
+#[cfg(feature = "f7")]
+mod f7;
+#[cfg(feature = "f7")]
+pub use f7::*;
 
 struct Gpio<const P: char>;
 impl<const P: char> Gpio<P> {
@@ -609,6 +621,7 @@ impl<const P: char> Gpio<P> {
         match P {
             'A' => crate::pac::GPIOA::ptr(),
             'B' => crate::pac::GPIOB::ptr() as _,
+            #[cfg(feature = "gpioc")]
             'C' => crate::pac::GPIOC::ptr() as _,
             #[cfg(feature = "gpiod")]
             'D' => crate::pac::GPIOD::ptr() as _,
@@ -618,6 +631,7 @@ impl<const P: char> Gpio<P> {
             'F' => crate::pac::GPIOF::ptr() as _,
             #[cfg(feature = "gpiog")]
             'G' => crate::pac::GPIOG::ptr() as _,
+            #[cfg(feature = "gpioh")]
             'H' => crate::pac::GPIOH::ptr() as _,
             #[cfg(feature = "gpioi")]
             'I' => crate::pac::GPIOI::ptr() as _,

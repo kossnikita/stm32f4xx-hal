@@ -2282,13 +2282,13 @@ pub mod tim1 {
     impl TimNCPin<1> for TIM {
         type ChN<Otype> = Ch2N<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimNCPin<3> for TIM {
+    impl TimNCPin<2> for TIM {
         type ChN<Otype> = Ch3N<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimBkin for TIM {
@@ -2347,10 +2347,10 @@ pub mod tim2 {
     impl TimCPin<1> for TIM {
         type Ch<Otype> = Ch2<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimEtr for TIM {
@@ -2414,10 +2414,10 @@ pub mod tim3 {
     impl TimCPin<1> for TIM {
         type Ch<Otype> = Ch2<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimEtr for TIM {
@@ -2467,10 +2467,10 @@ pub mod tim4 {
     impl TimCPin<1> for TIM {
         type Ch<Otype> = Ch2<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimEtr for TIM {
@@ -2528,10 +2528,10 @@ pub mod tim5 {
     impl TimCPin<1> for TIM {
         type Ch<Otype> = Ch2<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimEtr for TIM {
@@ -2627,13 +2627,13 @@ pub mod tim8 {
     impl TimNCPin<1> for TIM {
         type ChN<Otype> = Ch2N<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimNCPin<3> for TIM {
+    impl TimNCPin<2> for TIM {
         type ChN<Otype> = Ch3N<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimBkin for TIM {

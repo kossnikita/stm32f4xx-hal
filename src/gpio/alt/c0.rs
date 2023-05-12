@@ -494,10 +494,10 @@ pub mod tim3 {
     impl TimCPin<1> for TIM {
         type Ch<Otype> = Ch2<Otype>;
     }
-    impl TimCPin<3> for TIM {
+    impl TimCPin<2> for TIM {
         type Ch<Otype> = Ch3<Otype>;
     }
-    impl TimCPin<4> for TIM {
+    impl TimCPin<3> for TIM {
         type Ch<Otype> = Ch4<Otype>;
     }
     impl TimEtr for TIM {

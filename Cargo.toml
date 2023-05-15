@@ -75,8 +75,8 @@ embedded-graphics = "0.7.1"
 usb-device = "0.2.9"
 usbd-serial = "0.1.1"
 micromath = "2"
-cortex-m-rtic = { version = "1.1.4", features = ["test-critical-section"] }
-rtic2 = { package = "rtic", version = "2.0.0-alpha.2", features = ["thumbv7-backend", "test-critical-section"]  }
+#cortex-m-rtic = { version = "1.1.4", features = ["test-critical-section"] }
+rtic = { version = "2.0.0-alpha.2", features = ["thumbv7-backend", "test-critical-section"]  }
 dwt-systick-monotonic = "1.1"
 st7789 = "0.7.0"
 rtt-target = { version = "0.4.0" }
@@ -254,7 +254,7 @@ gpio-f469 = [
 usb_fs = ["synopsys-usb-otg", "synopsys-usb-otg/fs"]
 usb_hs = ["synopsys-usb-otg", "synopsys-usb-otg/hs"]
 
-async = ["rtic", "dep:rtic-time", "dep:rtic-monotonics"]
+async = ["rtic", "dep:rtic-time", "dep:rtic-monotonics", "rtic-monotonics?/cortex-m-systick"]
 
 can = ["bxcan"]
 

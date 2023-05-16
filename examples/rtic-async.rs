@@ -42,12 +42,13 @@ mod app {
     }
 
 
-    #[task(local = [led])]
+    #[task(local = [led, count: u32 = 0])]
     async fn tick(ctx: tick::Context) {
         loop {
             ctx.local.led.toggle();
-            defmt::info!("Tick");
-            Systick::delay(1000.millis()).await;
+            *ctx.local.count += 1;
+            defmt::info!("Tick {}", *ctx.local.count);
+            Systick::delay(500.millis()).await;
         }
     }
 }

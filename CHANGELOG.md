@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [#666]: https://github.com/stm32-rs/stm32f4xx-hal/pull/666
 [#677]: https://github.com/stm32-rs/stm32f4xx-hal/pull/677
 [#678]: https://github.com/stm32-rs/stm32f4xx-hal/pull/678
+- Use `enumflags2::BitFlags` for interrupt flags and events [#673]
+
+[#666]: https://github.com/stm32-rs/stm32f4xx-hal/pull/666
+[#673]: https://github.com/stm32-rs/stm32f4xx-hal/pull/673
 
 ## [v0.17.1] - 2023-07-24
 
@@ -24,7 +28,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - reset timer interrupt in `Counter::start` [#670]
-
 [#670]: https://github.com/stm32-rs/stm32f4xx-hal/pull/670
 [#671]: https://github.com/stm32-rs/stm32f4xx-hal/pull/671
 

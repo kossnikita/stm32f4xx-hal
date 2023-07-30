@@ -418,22 +418,29 @@ where
     }
 }
 
-impl<UART: Instance, WORD> crate::IrqFlags for Serial<UART, WORD>
+impl<UART: Instance, WORD> crate::ClearFlags for Serial<UART, WORD>
 where
     <UART as Instance>::RegisterBlock: RegisterBlockImpl,
     UART: Deref<Target = <UART as Instance>::RegisterBlock>,
 {
-    type CFlag = CFlag;
+    type Flag = CFlag;
+
+    #[inline(always)]
+    fn clear_flags(&mut self, flags: impl Into<BitFlags<Self::Flag>>) {
+        self.tx.usart.clear_flags(flags.into())
+    }
+}
+
+impl<UART: Instance, WORD> crate::ReadFlags for Serial<UART, WORD>
+where
+    <UART as Instance>::RegisterBlock: RegisterBlockImpl,
+    UART: Deref<Target = <UART as Instance>::RegisterBlock>,
+{
     type Flag = Flag;
 
     #[inline(always)]
     fn flags(&self) -> BitFlags<Self::Flag> {
         self.tx.usart.flags()
-    }
-
-    #[inline(always)]
-    fn clear_flags(&mut self, flags: impl Into<BitFlags<Self::CFlag>>) {
-        self.tx.usart.clear_flags(flags.into())
     }
 }
 

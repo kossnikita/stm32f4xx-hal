@@ -91,5 +91,6 @@ pub use crate::timer::SysMonoTimerExt as _stm32f4xx_hal_timer_SysMonoTimerExt;
 pub use crate::timer::SysTimerExt as _stm32f4xx_hal_timer_SysCounterExt;
 pub use crate::timer::TimerExt as _stm32f4xx_hal_timer_TimerExt;
 
-pub use crate::IrqFlags as _;
+pub use crate::ClearFlags as _;
 pub use crate::Listen as _;
+pub use crate::ReadFlags as _;

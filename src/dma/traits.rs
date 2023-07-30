@@ -19,7 +19,9 @@ use sealed::Bits;
 pub trait SafePeripheralRead {}
 
 /// Trait for DMA stream interrupt handling.
-pub trait StreamISR: crate::IrqFlags<Flag = DmaFlag, CFlag = DmaFlag> + crate::Sealed {
+pub trait StreamISR:
+    crate::ClearFlags<Flag = DmaFlag> + crate::ReadFlags<Flag = DmaFlag> + crate::Sealed
+{
     /// Clear transfer complete interrupt (tcif) for the DMA stream.
     fn clear_transfer_complete(&mut self) {
         self.clear_flags(DmaFlag::TransferComplete)

@@ -697,9 +697,8 @@ macro_rules! dma_stream {
     ($(($number:literal, $isr_shift:literal, $ifcr:ident, $isr:ident)),+
         $(,)*) => {
         $(
-            impl<I: Instance> crate::IrqFlags for StreamX<I, $number> {
+            impl<I: Instance> crate::ClearFlags for StreamX<I, $number> {
                 type Flag = DmaFlag;
-                type CFlag = DmaFlag;
 
 
                 #[inline(always)]
@@ -707,6 +706,10 @@ macro_rules! dma_stream {
                     let dma = unsafe { &*I::ptr() };
                     dma.$ifcr.write(|w| unsafe { w.bits((flags.into().bits() as u32) << $isr_shift) });
                 }
+            }
+
+            impl<I: Instance> crate::ReadFlags for StreamX<I, $number> {
+                type Flag = DmaFlag;
 
                 #[inline(always)]
                 fn flags(&self) -> BitFlags<DmaFlag>
@@ -1722,7 +1725,7 @@ where
 {
 }
 
-impl<STREAM, const CHANNEL: u8, PERIPHERAL, DIR, BUF> crate::IrqFlags
+impl<STREAM, const CHANNEL: u8, PERIPHERAL, DIR, BUF> crate::ClearFlags
     for Transfer<STREAM, CHANNEL, PERIPHERAL, DIR, BUF>
 where
     STREAM: Stream,
@@ -1731,12 +1734,22 @@ where
     PERIPHERAL: PeriAddress + DMASet<STREAM, CHANNEL, DIR>,
 {
     type Flag = DmaFlag;
-    type CFlag = DmaFlag;
 
     #[inline(always)]
     fn clear_flags(&mut self, flags: impl Into<BitFlags<DmaFlag>>) {
         self.stream.clear_flags(flags)
     }
+}
+
+impl<STREAM, const CHANNEL: u8, PERIPHERAL, DIR, BUF> crate::ReadFlags
+    for Transfer<STREAM, CHANNEL, PERIPHERAL, DIR, BUF>
+where
+    STREAM: Stream,
+    ChannelX<CHANNEL>: Channel,
+    DIR: Direction,
+    PERIPHERAL: PeriAddress + DMASet<STREAM, CHANNEL, DIR>,
+{
+    type Flag = DmaFlag;
 
     #[inline(always)]
     fn flags(&self) -> BitFlags<DmaFlag> {

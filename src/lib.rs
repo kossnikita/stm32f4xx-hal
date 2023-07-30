@@ -194,20 +194,23 @@ fn stripped_type_name<T>() -> &'static str {
     p.last().unwrap()
 }
 
-pub trait IrqFlags {
+pub trait ReadFlags {
     /// Enum of bit flags
     type Flag: BitFlag;
-    /// Enum of manually clearable flags
-    type CFlag: BitFlag;
 
     /// Get all interrupts flags a once.
     fn flags(&self) -> BitFlags<Self::Flag>;
+}
+
+pub trait ClearFlags {
+    /// Enum of manually clearable flags
+    type Flag: BitFlag;
 
     /// Clear interrupts flags with `Self::Flags`s
     ///
     /// If event flag is not cleared, it will immediately retrigger interrupt
     /// after interrupt handler has finished.
-    fn clear_flags(&mut self, flags: impl Into<BitFlags<Self::CFlag>>);
+    fn clear_flags(&mut self, flags: impl Into<BitFlags<Self::Flag>>);
 
     /// Clears all interrupts flags
     #[inline(always)]

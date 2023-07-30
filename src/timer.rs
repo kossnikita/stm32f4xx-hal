@@ -771,23 +771,29 @@ impl<TIM: Instance, const FREQ: u32> crate::Listen for FTimer<TIM, FREQ> {
     }
 }
 
-impl<TIM: Instance> crate::IrqFlags for Timer<TIM> {
+impl<TIM: Instance> crate::ClearFlags for Timer<TIM> {
     type Flag = Flag;
-    type CFlag = Flag;
     fn clear_flags(&mut self, event: impl Into<BitFlags<Flag>>) {
         self.tim.clear_interrupt_flag(event.into());
     }
+}
+
+impl<TIM: Instance> crate::ReadFlags for Timer<TIM> {
+    type Flag = Flag;
     fn flags(&self) -> BitFlags<Flag> {
         self.tim.get_interrupt_flag()
     }
 }
 
-impl<TIM: Instance, const FREQ: u32> crate::IrqFlags for FTimer<TIM, FREQ> {
+impl<TIM: Instance, const FREQ: u32> crate::ClearFlags for FTimer<TIM, FREQ> {
     type Flag = Flag;
-    type CFlag = Flag;
     fn clear_flags(&mut self, event: impl Into<BitFlags<Flag>>) {
         self.tim.clear_interrupt_flag(event.into());
     }
+}
+
+impl<TIM: Instance, const FREQ: u32> crate::ReadFlags for FTimer<TIM, FREQ> {
+    type Flag = Flag;
     fn flags(&self) -> BitFlags<Flag> {
         self.tim.get_interrupt_flag()
     }

@@ -8,16 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 - complete and rework Dma Stream API [#666]
+- Use `enumflags2::BitFlags` for interrupt flags and events [#673]
 - add `.set_count()` for QEI, add `.write_count()` for TIM [#677]
 - add "Fast start" section in README [#678]
 
 [#666]: https://github.com/stm32-rs/stm32f4xx-hal/pull/666
+[#673]: https://github.com/stm32-rs/stm32f4xx-hal/pull/673
 [#677]: https://github.com/stm32-rs/stm32f4xx-hal/pull/677
 [#678]: https://github.com/stm32-rs/stm32f4xx-hal/pull/678
-- Use `enumflags2::BitFlags` for interrupt flags and events [#673]
-
-[#666]: https://github.com/stm32-rs/stm32f4xx-hal/pull/666
-[#673]: https://github.com/stm32-rs/stm32f4xx-hal/pull/673
 
 ## [v0.17.1] - 2023-07-24
 

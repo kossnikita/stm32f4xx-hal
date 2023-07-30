@@ -5,7 +5,7 @@ use core::ptr;
 use crate::dma::traits::{DMASet, PeriAddress};
 use crate::dma::{MemoryToPeripheral, PeripheralToMemory};
 use crate::gpio::{self, NoPin};
-use crate::{pac, IrqFlags};
+use crate::{pac, ClearFlags, ReadFlags};
 
 /// Clock polarity
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -821,17 +821,20 @@ impl<SPI: Instance> crate::Listen for Inner<SPI> {
     }
 }
 
-impl<SPI: Instance> crate::IrqFlags for Inner<SPI> {
-    type CFlag = CFlag;
-    type Flag = Flag;
-    fn flags(&self) -> BitFlags<Self::Flag> {
-        BitFlags::from_bits_truncate(self.spi.sr.read().bits() as u16)
-    }
-    fn clear_flags(&mut self, event: impl Into<BitFlags<Self::CFlag>>) {
+impl<SPI: Instance> crate::ClearFlags for Inner<SPI> {
+    type Flag = CFlag;
+    fn clear_flags(&mut self, event: impl Into<BitFlags<Self::Flag>>) {
         // TODO: check
         self.spi
             .sr
             .write(|w| unsafe { w.bits(0xffff & !(event.into().bits() as u32)) });
+    }
+}
+
+impl<SPI: Instance> crate::ReadFlags for Inner<SPI> {
+    type Flag = Flag;
+    fn flags(&self) -> BitFlags<Self::Flag> {
+        BitFlags::from_bits_truncate(self.spi.sr.read().bits() as u16)
     }
 }
 
